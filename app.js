@@ -1,3 +1,6 @@
+const TODAY = new Date();
+const d = (s) => new Date(s);
+let STAFF = [];
 const $ = (s, r = document) => r.querySelector(s);
 const view = $('#view');
 const DAY = 864e5;
@@ -48,7 +51,7 @@ function dashboard() {
   const expired = all.filter(i => i.st.k.startsWith('bad')).length, soon = all.length - expired;
   const avg = Math.round(STAFF.reduce((a, s) => a + score(s), 0) / STAFF.length);
   const totalItems = STAFF.reduce((a, s) => a + 5 + s.training.length, 0);
-  return `<div class="view"><h1>Good morning, Admin</h1><p class="sub">Wednesday 11 November 2026 · Staff compliance overview</p>
+  return `<div class="view"><h1>Good morning, Admin</h1><p class="sub">${TODAY.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} · Staff compliance overview</p>
   <div class="grid stats">
     ${[['👥', STAFF.length, 'Active staff', ''], ['🛡️', avg, 'Compliance score', '%'], ['⚠️', soon, 'Expiring in 90 days', ''], ['🚨', expired, 'Expired items', '']].map(([i, n, l, suf]) => `<div class="card stat hover reveal"><div class="ico">${i}</div><div class="n" data-count="${n}" data-suf="${suf}">0</div><div class="l">${l}</div></div>`).join('')}
   </div>
@@ -129,4 +132,7 @@ $('#search').addEventListener('input', e => {
   location.hash.startsWith('#/staff/') || (location.hash = '#/staff');
   view.innerHTML = staffList(e.target.value); countUp(view);
 });
-route();
+view.innerHTML = '<div class="empty">Loading staff records...</div>';
+fetch('/api/staff').then(r => r.ok ? r.json() : r.json().then(e => Promise.reject(new Error(e.error))))
+  .then(data => { STAFF = data; route(); })
+  .catch(e => view.innerHTML = `<div class="empty">Could not load staff records: ${e.message}</div>`);

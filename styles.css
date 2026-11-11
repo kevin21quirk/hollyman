@@ -97,6 +97,7 @@ td{padding:12px 10px;border-top:1px solid #edf1ed}
 tbody tr{transition:.2s}tbody tr:hover{background:var(--gl)}
 .bar{height:8px;border-radius:8px;background:#e6ede6;overflow:hidden;min-width:100px}
 .bar i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--g),#9cc59c);transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
-.reveal{opacity:0;transform:translateY(20px);animation:in .6s forwards}
+.reveal{opacity:0;animation:rev .6s forwards}
+@keyframes rev{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .empty{text-align:center;color:var(--mut);padding:40px}
 .scroll{overflow-x:auto}

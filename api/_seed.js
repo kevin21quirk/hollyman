@@ -1,7 +1,4 @@
-const TODAY = new Date('2026-11-11');
-const d = (s) => new Date(s);
-
-const STAFF = [
+export const STAFF = [
   {
     id: 1, name: 'Sarah Mitchell', role: 'Home Manager', dept: 'Management', photo: 'https://randomuser.me/api/portraits/women/44.jpg',
     email: 'sarah.mitchell@hollymancare.co.uk', phone: '07700 900123', dob: '1983-04-12', ni: 'QQ 12 34 56 C', start: '2016-03-01', contract: 'Full-time', hours: 40, address: '14 Orchard Lane, Stafford, ST16 2AB',
